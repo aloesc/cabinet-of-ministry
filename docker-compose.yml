@@ -31,7 +31,11 @@ services:
       - network
     depends_on:
       - db
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "
+      export FLASK_APP=main.py &&
+      flask run --host=0.0.0.0 --port=8000
+      "
 
   migrator:
     build: ./backend
