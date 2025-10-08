@@ -30,6 +30,7 @@ class UserCreate(BaseModel):
     gender: Optional[str] = None
     role: Optional[str] = None
 
+
 class UserRead(UserBase):
     id: int
 
@@ -39,6 +40,18 @@ class UserRead(UserBase):
 class UserLogin(BaseModel):
     username: str
     password: str
+
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    full_name: Optional[str] = None
+    password: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phonenumber: Optional[str] = None
+    date_of_birth: Optional[date] = None
+    gender: Optional[str] = None
+    role: Optional[str] = None
+    is_superuser: Optional[bool] = None
+
 
 
 # ---------- EVENTS ----------

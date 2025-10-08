@@ -44,7 +44,9 @@ services:
       - SMTP_PORT=${SMTP_PORT}
       - SMTP_USER=${SMTP_USER}
       - SMTP_PASS=${SMTP_PASS}
-    command: "python main.py"
+    command: > 
+      sh -c "python create_superuser.py &&
+      python main.py"
 
   migrator:
     build: ./backend

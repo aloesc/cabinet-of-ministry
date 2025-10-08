@@ -24,3 +24,15 @@ async def validate_user(current_user, session):
         raise fastapi.HTTPException(status_code=404, detail="User not found")
     
     return user
+
+async def validate_superuser(current_user, session):
+    stmt = select(Users).where(Users.username == current_user)
+    execution = await session.execute(stmt)
+    user = execution.scalar_one_or_none()
+    
+    if user is None:
+        raise fastapi.HTTPException(status_code=404, detail="User not found")
+    if user.is_superuser != True:
+        raise fastapi.HTTPException(status_code=403, detail="Forbidden")
+    
+    return user
