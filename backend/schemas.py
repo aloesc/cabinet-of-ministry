@@ -12,6 +12,12 @@ class UserBase(BaseModel):
     gender: Optional[str] = None
     role: Optional[str] = None
 
+class UserForgotPassword(BaseModel):
+    email: EmailStr
+
+class UserResetPassword(BaseModel):
+    new_password: str
+
 class UserCreate(BaseModel):
     username: str
     password: str
@@ -63,6 +69,7 @@ class DocumentBase(BaseModel):
     description: Optional[str] = None
     date_of_uploaded: Optional[str] = None
     type_of_document: Optional[str] = None
+    binary_data: Optional[str] = None
 
 
 class DocumentRead(DocumentBase):

@@ -7,7 +7,7 @@ from sqlalchemy import select
 from auth.jwt_handler import get_current_user
 from fastapi import Depends, HTTPException, Form, File, UploadFile
 from io import BytesIO
-from auth.validate_user import validate_user, validate_admin
+from services.validate_user import validate_user, validate_admin
 
 router = fastapi.APIRouter(
     prefix="/documents",

@@ -4,7 +4,7 @@ from database.models import Users
 from database.engine import SessionDep
 from sqlalchemy import select
 from auth.jwt_handler import get_password_hash
-from auth.validate_user import validate_admin, validate_user
+from services.validate_user import validate_admin, validate_user
 from auth.jwt_handler import get_current_user
 from fastapi import Depends
 

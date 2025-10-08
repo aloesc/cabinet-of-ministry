@@ -1,9 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from datetime import timedelta
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks, Query
+from datetime import timedelta, datetime
 from sqlalchemy import select
 from database.engine import SessionDep
 from auth.jwt_handler import create_access_token, verify_password, get_password_hash
 import database.models as models, schemas
+import secrets
+from datetime import datetime, timedelta
+from services.send_mail import send_email
+from database.models import Users
+import requests
+
+
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -32,3 +39,37 @@ async def register(user: schemas.UserCreate, session: SessionDep):
     await session.commit()
     await session.refresh(new_user)
     return new_user
+
+@router.post("/forgot_password")
+async def forgot_password(user: schemas.UserForgotPassword, background_tasks: BackgroundTasks, session: SessionDep):
+    result = await session.execute(select(Users).where(Users.email == user.email))
+    user = result.scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    token = secrets.token_urlsafe(32)
+    expires = datetime.utcnow() + timedelta(minutes=30)
+    
+    user.reset_token = token
+    user.reset_token_expires = expires
+    session.add(user)
+    await session.commit()
+
+    # 4. Отправляем письмо в фоне
+    ip = requests.get('https://api.ipify.org').text
+    reset_link = f"https://{ip}:8000/auth/reset_password?token={token}"
+    background_tasks.add_task(send_email, to=user.email, subject="Password reset", body=f"Сброс пароля: {reset_link}")
+
+@router.post("/reset_password")
+async def reset_password(user: schemas.UserResetPassword, session: SessionDep,token: str = Query(...)):
+    result = await session.execute(select(Users).where(Users.reset_token == token))
+    user_obj = result.scalar_one_or_none()
+    if not user_obj or datetime.fromisoformat(user_obj.reset_token_expires) < datetime.utcnow():
+        raise HTTPException(status_code=400, detail="Invalid or expired token")
+
+    hashed_password = get_password_hash(user.new_password)
+    user_obj.password = hashed_password
+    user_obj.reset_token = None
+    user_obj.reset_token_expires = None
+    session.add(user_obj)
+    await session.commit()
