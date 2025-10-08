@@ -6,3 +6,4 @@
 .env
 environment/
 backend/alembic/versions/*
+**/node_modules

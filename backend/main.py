@@ -4,7 +4,7 @@ from typing import List
 import routers.documents as documents
 import auth.auth_router as auth
 import routers.users as users
-import routers.test as test
+import routers.events as events
 
 from database.engine import SessionDep
 from auth.jwt_handler import get_password_hash
@@ -13,29 +13,24 @@ from sqlalchemy import select
 import os
 from contextlib import asynccontextmanager
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     username = os.getenv("ADMIN_USER", "admin")
-#     password = os.getenv("ADMIN_PASS", "admin")
-#     async with SessionDep() as session:
-#         stmt = select(models.Users).where(models.Users.username == username)
-#         result = await session.execute(stmt)
-#         user = result.scalar_one_or_none()
-#         if not user:
-#             hashed = get_password_hash(password)
-#             superuser = models.Users(username=username, password=hashed, is_superuser=True)
-#             session.add(superuser)
-#             print(f"✅ Superuser '{username}' created.")
-#         else:
-#             print(f"ℹ️ Superuser '{username}' already exists.")
-
 app = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # или ["http://localhost:3000"] — укажи свой фронт
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(documents.router)
 app.include_router(auth.router)
 app.include_router(users.router)
-app.include_router(test.router)
-# app.add_route(events.router)
+app.include_router(events.router)
+#app.include_router(bill.router)
+
+
 
 if __name__ == "__main__":
     import uvicorn

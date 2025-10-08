@@ -5,22 +5,23 @@ from database.models import Documents
 from database.engine import SessionDep
 from sqlalchemy import select
 from auth.jwt_handler import get_current_user
-from fastapi import Depends, HTTPException, Form, File, UploadFile
+from fastapi import Depends, HTTPException, Form, File, UploadFile, Query
 from io import BytesIO
-from auth.validate_user import validate_user, validate_admin
+from services.validate_user import validate_user, validate_admin
 
 router = fastapi.APIRouter(
     prefix="/documents",
-    tags=["documents"],
+    tags=["Documents"],
     responses={404: {"description": "Not found"}},
 )
 
 
 @router.get("/")
 async def get_documents(session: SessionDep,
-                        current_user: str = Depends(get_current_user)):
+                        current_user: str = Depends(get_current_user),
+                        type_of_doc: str = Query(...)):
     user = await validate_user(current_user, session)
-    stmt = select(Documents)
+    stmt = select(Documents).where(Documents.type_of_document == type_of_doc)
     result = await session.execute(stmt)
     documents = result.scalars().all()
 

@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: #fff;
+  color: #222;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+}
+
+.logo {
+  height: 60px;
+}
+
+.login-btn {
+  background: #0099ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.2);
+  transition: 0.2s ease;
+}
+
+.login-btn:hover {
+  background: #007add;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.register-form {
+  background: #eaf6ff;
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1.5px solid #bfe4ff;
+}
+
+.register-form input,
+.register-form select {
+  padding: 10px 12px;
+  border: 2px solid #66c2ff;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  background: white;
+}
+
+.register-form input:focus,
+.register-form select:focus {
+  border-color: #0099ff;
+  box-shadow: 0 0 6px rgba(0, 153, 255, 0.4);
+}
+
+.inline-fields {
+  display: flex;
+  gap: 10px;
+}
+
+.register-btn {
+  background: #0099ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.15);
+  transition: 0.2s ease;
+}
+
+.register-btn:hover {
+  background: #007add;
+}
+
+/* --- Адаптация для мобильных устройств --- */
+
+@media (max-width: 480px) {
+  header {
+    padding: 15px;
+  }
+
+  main {
+    margin-top: 20px;
+    padding: 0 15px;
+  }
+
+  .register-form {
+    width: 100%;
+    padding: 20px;
+  }
+}
