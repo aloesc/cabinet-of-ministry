@@ -1,0 +1,79 @@
+services:
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - network
+    healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
+  backend:
+    build: ./backend
+    container_name: backend
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    networks:
+      - network
+    depends_on:
+      - db
+    environment:
+      - DBHOST=db
+      - DBUSER=${MYSQL_USER}
+      - DBPASS=${MYSQL_PASSWORD}
+      - DBNAME=${MYSQL_DATABASE}
+      - DBPORT=${MYSQL_PORT}
+      - SECRET_KEY_JWT=${SECRET_KEY_JWT}
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    command: "python main.py"
+
+  migrator:
+    build: ./backend
+    container_name: alembic_migrator_container
+    command: >
+      sh -c "
+      if [ ! -d /app/alembic/versions ]; then
+        mkdir -p /app/alembic/versions;
+      fi &&
+      apt-get update &&
+      alembic upgrade head &&
+      alembic revision --autogenerate -m 'Initial migration' &&
+      alembic upgrade head"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - network
+    volumes:
+      - ./backend/alembic/:/app/alembic/
+
+  adminer: #ONLY FOR DEBUG/DEVELOPMENT
+    image: adminer
+    container_name: adminer_container
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - network
+
+volumes:
+  mysql_data:
+
+networks:
+  network:
+    driver: bridge
