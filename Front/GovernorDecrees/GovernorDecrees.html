@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Панель управления</title>
+  <link rel="stylesheet" href="GovernorDecrees.css">
+</head>
+<body>
+  <nav class="side-menu" id="sideMenu">
+    <div class="side-menu-profile">
+      <img src="../imeg/profil.png" alt="Профиль" class="profile-pic">
+      <span id="username">Ельцин Б.Н.</span>
+    </div>
+    <ul class="side-menu-nav">
+      <li><a href="../www/index.html"><img src="../imeg/home2.png" alt="" class="side-menu-icon">Главная</a></li>
+      <li><a href="#"><img src="../imeg/peapol.png" alt="" class="side-menu-icon">Контакты</a></li>
+      <li><a href="#"><img src="../imeg/setings.png" alt="" class="side-menu-icon">Настройки</a></li>
+    </ul>
+    <div class="side-menu-footer">
+      <a href="../login/login.html" class="logout-btn"><img src="../imeg/out.png" alt="" class="side-menu-icon">Выйти</a>
+    </div>
+  </nav>
+  <div class="overlay" id="overlay"></div>
+
+  <header>
+    <div class="header-left">
+      <div class="menu-icon" id="menuBtn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="user-info">
+        <span id = "username">Ельцин Б.Н.</span>
+        <img src="../imeg/profil.png" alt="Профиль" class="profile-pic">
+      </div>
+    </div>
+  </header>
+
+  <div class="logo-container">
+    <span class="logo-text">Городская Дума</span>
+    <img src="../imeg/gerb1.png" alt="Герб" class="logo">
+    <span class="logo-text">города Екатеринбург</span>
+  </div>
+
+  <main class="agenda-container">
+  </main>
+
+  <script src="GovernorDecrees.js"></script>
+</body>
+</html>

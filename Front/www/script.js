@@ -2,7 +2,7 @@ const menuBtn = document.getElementById("menuBtn");
 const sideMenu = document.getElementById("sideMenu");
 
 menuBtn.addEventListener("click", (event) => {
-  event.stopPropagation(); // Предотвращаем "всплытие" события
+  event.stopPropagation();
   sideMenu.classList.toggle("open");
 });
 
@@ -37,3 +37,8 @@ document.addEventListener("click", (event) => {
     user.textContent = "Пользователь";
   }
 })();
+
+const logoutBtn = document.getElementsByClassName("logout-btn")[0];
+document.addEventListener("click", (event) => {
+  localStorage.clear()
+});
