@@ -1,7 +1,8 @@
-/.vscode
+**/.vscode
 *.pyc
 *.pyo
-/__pycache__
-/environment
+**/__pycache__
+**/environment
 .env
 environment/
+backend/alembic/versions/*

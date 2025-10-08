@@ -31,15 +31,20 @@ services:
       - network
     depends_on:
       - db
-    command: >
-      sh -c "
-      export FLASK_APP=main.py &&
-      flask run --host=0.0.0.0 --port=8000
-      "
+    environment:
+      - DBHOST=db
+      - DBUSER=${MYSQL_USER}
+      - DBPASS=${MYSQL_PASSWORD}
+      - DBNAME=${MYSQL_DATABASE}
+      - DBPORT=${MYSQL_PORT}
+      - SECRET_KEY_JWT=${SECRET_KEY_JWT}
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    command: "python main.py"
 
   migrator:
     build: ./backend
-    container_name: alembic_migrator
+    container_name: alembic_migrator_container
     command: >
       sh -c "
       if [ ! -d /app/alembic/versions ]; then
@@ -55,11 +60,11 @@ services:
     networks:
       - network
     volumes:
-      - ./bot/alembic:/app/alembic
+      - ./backend/alembic/:/app/alembic/
 
   adminer: #ONLY FOR DEBUG/DEVELOPMENT
     image: adminer
-    container_name: adminer
+    container_name: adminer_container
     restart: always
     ports:
       - 8080:8080

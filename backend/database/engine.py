@@ -3,8 +3,6 @@ from os import getenv
 from fastapi import Depends
 from typing import Annotated
 
-
-
 class async_engine_sql():
     def __init__(self):
         DBHOST = getenv("DBHOST", "localhost")
@@ -17,13 +15,18 @@ class async_engine_sql():
 
         DB_URL = f"mysql+aiomysql://{DBUSER}:{DBPASSWORD}@{DBHOST}:{DBPORT}/{DBNAME}"
 
+
         self.engine = create_async_engine(DB_URL, future=True)
 
+        self.AsyncSessionLocal = async_sessionmaker(self.engine, expire_on_commit=False)
+        
     async def get_session(self):
-        async_session = async_sessionmaker(self.engine, expire_on_commit=False)
-        async with async_session() as session:
+        # 3. Метод зависимости теперь использует публичную фабрику
+        # Проверка на всякий случай, если класс еще не был инициализирован
+        if self.AsyncSessionLocal is None:
+            raise Exception("База данных не инициализирована.")
+        async with self.AsyncSessionLocal() as session:
             yield session
 
-
-
-SessionDep = Annotated[AsyncSession, Depends(async_engine_sql().get_session)]
+db_engine = async_engine_sql()
+SessionDep = Annotated[AsyncSession, Depends(db_engine.get_session)]
