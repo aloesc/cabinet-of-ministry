@@ -15,7 +15,15 @@ from contextlib import asynccontextmanager
 
 app = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # или ["http://localhost:3000"] — укажи свой фронт
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(documents.router)
 app.include_router(auth.router)
 app.include_router(users.router)

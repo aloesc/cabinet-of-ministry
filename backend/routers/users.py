@@ -22,6 +22,17 @@ async def get_users(session: SessionDep, current_user: str = Depends(get_current
     users = result.scalars().all()
     return users
 
+@router.get("/whoami")
+async def get_user(session: SessionDep, current_user: str = Depends(get_current_user)):
+    user = await validate_user(current_user, session)
+    return {
+        "id": user.id,
+        "username": user.username,
+        "full_name": user.full_name,
+        "email": user.email,
+        "date_of_birth": user.date_of_birth,
+        "gender": user.gender
+    }
 
 
 @router.get("/{user_id}")
@@ -39,6 +50,8 @@ async def get_user(user_id: int, session: SessionDep, current_user: str = Depend
         "date_of_birth": user.date_of_birth,
         "gender": user.gender
     }
+
+
 
 @router.put("/{user_id}")
 async def update_user(user_id: int, user: schemas.UserUpdate, session: SessionDep, current_user: str = Depends(get_current_user)):

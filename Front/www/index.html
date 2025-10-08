@@ -9,16 +9,16 @@
 <body>
   <nav class="side-menu" id="sideMenu">
     <div class="side-menu-profile">
-      <img src="../imeg/profil.png" alt="Профиль" class="profile-pic">
-      <span>Ельцин Б.Н.</span>
+      <img src="imeg/profil.png" alt="Профиль" class="profile-pic">
+      <span id ="username">Ельцин Б.Н.</span>
     </div>
     <ul class="side-menu-nav">
-      <li><a href="#"><img src="../imeg/home2.png" alt="" class="side-menu-icon">Главная</a></li>
-      <li><a href="#"><img src="../imeg/peapol.png" alt="" class="side-menu-icon">Контакты</a></li>
-      <li><a href="#"><img src="../imeg/setings.png" alt="" class="side-menu-icon">Настройки</a></li>
+      <li><a href="index.html"><img src="imeg/home2.png" alt="" class="side-menu-icon">Главная</a></li>
+      <li><a href="#"><img src="imeg/peapol.png" alt="" class="side-menu-icon">Контакты</a></li>
+      <li><a href="#"><img src="imeg/setings.png" alt="" class="side-menu-icon">Настройки</a></li>
     </ul>
     <div class="side-menu-footer">
-      <a href="#" class="logout-btn"><img src="../imeg/out.png" alt="" class="side-menu-icon">Выйти</a>
+      <a href="login/login.html" class="logout-btn"><img src="imeg/out.png" alt="" class="side-menu-icon">Выйти</a>
     </div>
   </nav>
   <div class="overlay" id="overlay"></div>
@@ -33,55 +33,51 @@
     </div>
     <div class="header-right">
       <div class="user-info">
-        <span>Ельцин Б.Н.</span>
-        <img src="../imeg/profil.png" alt="Профиль" class="profile-pic">
+        <span id = "username">Ельцин Б.Н.</span>
+        <img src="imeg/profil.png" alt="Профиль" class="profile-pic">
       </div>
     </div>
   </header>
 
   <div class="logo-container">
     <span class="logo-text">Городская Дума</span>
-    <img src="../imeg/gerb1.png" alt="Герб" class="logo">
+    <img src="imeg/gerb1.png" alt="Герб" class="logo">
     <span class="logo-text">города Екатеринбург</span>
   </div>
 
 
   <main>
     <div class="grid">
-      <div class="card card--full-image">
-        <img src="../imeg/1pic.png" alt="Повестки заседаний ЗС" class="card-img-full">
+      <div onclick="window.location.href = 'zasedaniya/zasedaniya.html'" class="card card--full-image">
+        <img src="imeg/1pic.png" alt="Повестки заседаний ЗС" class="card-img-full">
         <p>Повестки заседаний ЗС</p>
       </div>
-      <div class="card card--full-image">
-        <img src="../imeg/2pic.png" alt="Прочие повестки" class="card-img-full">
+      <div onclick="window.location.href = 'ProchiePovestki/ProchiePovestki.html'" class="card card--full-image">
+        <img src="imeg/2pic.png" alt="Прочие повестки" class="card-img-full">
         <p>Прочие повестки</p>
       </div>
-      <div class="card">
-        <img src="../imeg/pic3.png">
-        <p>Новостная лента</p>
-      </div>
-      <div class="card">
-        <img src="../imeg/pic4.png">
+      <div class="card" onclick="window.location.href = 'calander/calander.html'">
+        <img src="imeg/pic4.png">
         <p>План мероприятий</p>
       </div>
-      <div class="card">
-        <img src="../imeg/pic5.png">
+      <div class="card" onclick="window.location.href = 'passportdocs/passportdocs.html' ">
+        <img src="imeg/pic5.png">
         <p>Паспорт закона</p>
       </div>
-      <div class="card">
-        <img src="../imeg/pic6.png">
+      <div class="card" onclick="window.location.href = 'GovernorDecrees/GovernorDecrees.html' ">
+        <img src="imeg/pic6.png">
         <p>Указы губернатора</p>
       </div>
-      <div class="card">
-        <img src="../imeg/pic7.png">
+      <div class="card" onclick="window.location.href = 'PostanovleniyaPravitelstva/PostanovleniyaPravitelstva.html'">
+        <img src="imeg/pic7.png">
         <p>Постановления Правительства</p>
       </div>
-      <div class="card">
-        <img src="../imeg/pic8.png">
+      <div class="card" onclick="window.location.href = 'BudgetExecution/BudgetExecution.html'">
+        <img src="imeg/pic8.png">
         <p>Исполнение бюджета</p>
       </div>
-      <div class="card">
-        <img src="../imeg/pic9.png">
+      <div class="card" onclick="window.location.href = 'AnalyticalMaterials/AnalyticalMaterials.html'">
+        <img src="imeg/pic9.png">
         <p>Аналитические материалы</p>
       </div>
     </div>
