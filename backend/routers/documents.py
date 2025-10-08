@@ -11,7 +11,7 @@ from services.validate_user import validate_user, validate_admin
 
 router = fastapi.APIRouter(
     prefix="/documents",
-    tags=["documents"],
+    tags=["Documents"],
     responses={404: {"description": "Not found"}},
 )
 

@@ -4,6 +4,7 @@ from typing import List
 import routers.documents as documents
 import auth.auth_router as auth
 import routers.users as users
+import routers.events as events
 
 from database.engine import SessionDep
 from auth.jwt_handler import get_password_hash
@@ -33,8 +34,9 @@ app = FastAPI()
 app.include_router(documents.router)
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(events.router)
 #app.include_router(bill.router)
-# app.add_route(events.router)
+
 
 if __name__ == "__main__":
     import uvicorn

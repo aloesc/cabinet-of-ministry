@@ -26,7 +26,7 @@ class Events(Base):
     id = Column(BigInteger, primary_key=True)
     title = Column(String(255))
     description = Column(String(1024))
-    date = Column(String(50))
+    date_of_event = Column(String(50))
     location = Column(String(255))
     type_of_event = Column(String(100))
 

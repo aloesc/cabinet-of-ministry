@@ -1,5 +1,7 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, Literal
+from datetime import datetime, date
+
 
 
 # ---------- USERS ----------
@@ -8,8 +10,8 @@ class UserBase(BaseModel):
     full_name: Optional[str] = None
     email: Optional[EmailStr] = None
     phonenumber: Optional[str] = None
-    date_of_birth: Optional[str] = None
-    gender: Optional[str] = None
+    date_of_birth: Optional[date] = None
+    gender: Optional[Literal["male", "female", "other"]] = None
     role: Optional[str] = None
 
 class UserForgotPassword(BaseModel):
@@ -24,7 +26,7 @@ class UserCreate(BaseModel):
     email: EmailStr
     full_name: Optional[str] = None
     phonenumber: Optional[str] = None
-    date_of_birth: Optional[str] = None
+    date_of_birth: Optional[date] = None
     gender: Optional[str] = None
     role: Optional[str] = None
 
@@ -43,15 +45,15 @@ class UserLogin(BaseModel):
 class EventBase(BaseModel):
     title: str
     description: str
-    date: str
-    location: str
+    date_of_event: Optional[datetime] = None
+    location: Optional[date] = None
     type_of_event: Optional[str] = None
 
 
 class EventCreate(EventBase):
     title: str
     description: Optional[str] = None
-    date: Optional[str] = None
+    date_of_event: Optional[datetime] = None
     location: Optional[str] = None
     type_of_event: str
 
@@ -67,7 +69,7 @@ class EventRead(EventBase):
 class DocumentBase(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
-    date_of_uploaded: Optional[str] = None
+    date_of_uploaded: Optional[datetime] = None
     type_of_document: Optional[str] = None
     binary_data: Optional[str] = None
 

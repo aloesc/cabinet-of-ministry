@@ -10,7 +10,7 @@ from fastapi import Depends
 
 router = fastapi.APIRouter(
     prefix="/users",
-    tags=["users"],
+    tags=["Users"],
     responses={404: {"description": "Not found"}},
 )
 
